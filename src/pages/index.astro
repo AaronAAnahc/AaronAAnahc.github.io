@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="A-BLOG | Home">
+  <section>
+    <h1>Your Name Here</h1>
+    <p class="intro">
+      A short one-line intro goes here — for example: “I build thoughtful web experiences.”
+    </p>
+    <div class="cta">
+      <a href="https://github.com/your-username" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="mailto:you@example.com">Email</a>
+      <a href="https://x.com/your-handle" target="_blank" rel="noreferrer">X / Twitter</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .intro {
+    margin: 0;
+    max-width: 44ch;
+    color: #3f575d;
+    font-size: 1.1rem;
+  }
+
+  .cta {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cta a {
+    text-decoration: none;
+    color: #0f3136;
+    border: 1px solid #b8ece7;
+    background: #effaf8;
+    border-radius: 999px;
+    padding: 0.45rem 0.85rem;
+    font-weight: 500;
+  }
+
+  .cta a:hover {
+    border-color: #39c5bb;
+    background: #dff7f4;
+  }
+</style>

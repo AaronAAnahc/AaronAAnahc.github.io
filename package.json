@@ -1,0 +1,21 @@
+{
+  "name": "a-blog",
+  "version": "1.0.0",
+  "description": "A personal website",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/Aaron-AA0721/A-BLOG"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "astro": "^7.2.0"
+  }
+}
