@@ -1,4 +1,4 @@
-# A-BLOG
+# AaronAAnahc.github.io
 
 A clean, minimal Astro personal website with a restrained Hatsune Miku-inspired palette.
 
@@ -17,16 +17,16 @@ npm run build
 
 ## Pages configuration
 
-This project is configured for GitHub Pages project-site deployment:
+This project is configured for GitHub Pages user-site deployment:
 
-- `site`: `https://Aaron-AA0721.github.io/A-BLOG`
-- `base`: `/A-BLOG`
+- `site`: `https://AaronAAnahc.github.io/`
+- `base`: _(not set; user site root)_
 
-The workflow at `.github/workflows/deploy.yml` uses `withastro/action@v6` and deploys on every push to `main`.
+The workflow at `.github/workflows/deploy.yml` uses `withastro/action@v4` and deploys on every push to `main`.
 
 In the repository settings, set **Pages** source to **GitHub Actions**.
 
 ## Content editing
 
-- Home page: `/home/runner/work/A-BLOG/A-BLOG/src/pages/index.astro`
-- About page (Markdown): `/home/runner/work/A-BLOG/A-BLOG/src/pages/about.md`
+- Home page: `/home/runner/work/AaronAAnahc.github.io/AaronAAnahc.github.io/src/pages/index.astro`
+- About page (Markdown): `/home/runner/work/AaronAAnahc.github.io/AaronAAnahc.github.io/src/pages/about.md`
