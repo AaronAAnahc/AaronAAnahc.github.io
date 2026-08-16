@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="A-BLOG | About">
+  <section class="about">
+    <h1><span data-lang="en">About</span><span data-lang="zh">关于我</span></h1>
+
+    <p class="lead">
+      <span data-lang="en">I'm Aaron — a game developer and rendering engineer pursuing a dual degree between the University of Hong Kong and the University of Cambridge. I gravitate toward the hard problems — the kind you have to sit with for a while, and that teach you something along the way.</span>
+      <span data-lang="zh">我是 Aaron，一名游戏开发者，正在香港大学与剑桥大学攻读双学位。我偏爱那些需要坐下来慢慢啃的难题——因为在解开它们的过程中，总能学到不少东西。</span>
+    </p>
+
+    <p>
+      <span data-lang="en">I focus on game engine rendering and computer graphics, with hands-on experience bringing AI-generated content into game scenes. I've built a full software rasterization pipeline from scratch — world-to-camera view transforms, FOV-based perspective projection, Z-buffer depth testing, triangle clipping and rasterization, plus my own 3D math library — without touching any graphics API. I'm currently interning at Tencent Photon, working on AI semantic understanding in UGC scenes and implementing isosurface mesh generation with Dual Contouring and Marching Cubes.</span>
+      <span data-lang="zh">我专注于游戏引擎渲染与图形学，并在将 AI 生成内容落地到游戏场景上持续实践。我从零实现过完整的软光栅化渲染管线——世界到相机空间的视图变换、基于 FOV 的透视投影、Z-Buffer 深度测试、三角形裁剪与光栅化，以及自研的 3D 数学库，全程不依赖任何图形 API。目前我在腾讯光子实习，参与 UGC 场景下的 AI 语义理解模块开发，并实现基于 Dual Contouring 与 Marching Cubes 的等值面网格生成算法。</span>
+    </p>
+
+    <p>
+      <span data-lang="en">I'm comfortable with C/C++, C#, Python, Unity, and Unreal Engine, and I also have experience in 3D reconstruction and point-cloud registration (ICP).</span>
+      <span data-lang="zh">我熟练使用 C/C++、C#、Python、Unity 与 Unreal Engine，并有三维重建与点云配准（ICP）的经验。</span>
+    </p>
+
+    <h2><span data-lang="en">Experience</span><span data-lang="zh">实习经历</span></h2>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <span class="exp-role"><span data-lang="en">Game Client Development Intern (Unreal Engine)</span><span data-lang="zh">游戏客户端开发实习生 (Unreal Engine)</span></span>
+        <span class="exp-org"><span data-lang="en">Tencent · Lightspeed Studios</span><span data-lang="zh">腾讯 · 光子学习发展组</span></span>
+        <span class="exp-meta"><span data-lang="en">Shenzhen China · Jul 2026 – Present</span><span data-lang="zh">深圳，中国 · 2026 年 7 月 – 至今</span></span>
+      </div>
+      <ul>
+        <li><span data-lang="en">Implemented isosurface mesh generation with Dual Contouring and Marching Cubes for dynamic mesh construction and rendering.</span><span data-lang="zh">实现基于 Dual Contouring 与 Marching Cubes 的等值面网格生成算法，用于动态网格的构建与渲染。</span></li>
+        <li><span data-lang="en">Contributed to the AI semantic-understanding system for UGC scenes.</span><span data-lang="zh">参与 UGC 场景下的 AI 语义理解系统的构建。</span></li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <span class="exp-role"><span data-lang="en">3D Perception / Computer Vision Engineer</span><span data-lang="zh">3D 感知 / 计算机视觉算法工程师</span></span>
+        <span class="exp-org">Braillic Limited</span>
+        <span class="exp-meta"><span data-lang="en">Hong Kong, China · Jul – Aug 2025</span><span data-lang="zh">香港，中国 · 2025 年 7 – 8 月</span></span>
+      </div>
+      <ul>
+        <li><span data-lang="en">Built a FastAPI backend to deploy and manage Python image-processing algorithms, and implemented a real-time fiducial-marker tracking system for the Magic Leap 2 headset in Unity.</span><span data-lang="zh">开发基于 FastAPI 的后端服务，用于部署和管理 Python 图像处理算法，并在 Unity 中实现 Magic Leap 2 头显的实时基准标记追踪系统。</span></li>
+        <li><span data-lang="en">Developed 3D registration algorithms — fusing 2D face detection with 3D triangulation of facial landmarks and aligning point clouds via ICP — and built a multi-view RGB-D fusion system for high-precision point clouds.</span><span data-lang="zh">研发三维配准算法——融合 2D 人脸检测与面部特征点三维三角测量，并通过 ICP 对齐位姿深度图像获得的点云；构建多视角 RGB-D 图像融合系统，生成高精度三维点云。</span></li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <span class="exp-role"><span data-lang="en">Research Assistant (Full-Stack Developer)</span><span data-lang="zh">研究助理（全栈开发）</span></span>
+        <span class="exp-org"><span data-lang="en">SLRLAB, The University of Hong Kong</span><span data-lang="zh">SLRLAB, 香港大学</span></span>
+        <span class="exp-meta"><span data-lang="en">Hong Kong, China · Oct 2023 – Aug 2024</span><span data-lang="zh">香港，中国 · 2023 年 10 月 – 2024 年 8 月</span></span>
+      </div>
+      <ul>
+        <li><span data-lang="en">Developed a Unity2D mobile game to help children with special needs improve Cantonese literacy.</span><span data-lang="zh">使用 Unity2D 开发帮助特殊需求儿童提升粤语读写能力的移动游戏。</span></li>
+        <li><span data-lang="en">Maintained a Django backend and PostgreSQL database, built an automated test system on Unity Test Framework, and led the programming team — running progress reviews, tracking milestones, and reporting to the lab.</span><span data-lang="zh">维护 Django 后端与 PostgreSQL 数据库，基于 Unity Test Framework 构建自动化测试系统，并领导编程团队：组织进度评审、追踪里程碑、向实验室教授汇报。</span></li>
+      </ul>
+    </div>
+
+    <h2><span data-lang="en">Education</span><span data-lang="zh">教育经历</span></h2>
+
+    <div class="edu-item">
+      <div class="edu-head">
+        <span class="edu-school"><span data-lang="en">Trinity Hall, University of Cambridge</span><span data-lang="zh">剑桥大学 Trinity Hall</span></span>
+        <span class="edu-meta"><span data-lang="en">BA (Engineering, Hons) · 2024 – Present</span><span data-lang="zh">文学士（工程学，荣誉学位）· 2024 至今</span></span>
+      </div>
+      <p class="edu-detail"><span data-lang="en">Relevant coursework: linear algebra, probability, linear systems and control, Fourier transforms and signal/data analysis, statistical signal processing, information theory and coding, 3D computer graphics.</span><span data-lang="zh">相关课程：线性代数、概率论、线性系统与控制、傅里叶变换及信号与数据分析、统计信号处理、信息理论与编码、三维计算机图形学。</span></p>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-head">
+        <span class="edu-school"><span data-lang="en">The University of Hong Kong</span><span data-lang="zh">香港大学</span></span>
+        <span class="edu-meta"><span data-lang="en">BEng (Computer Engineering) · 2022 – Present · GPA 3.73/4.3</span><span data-lang="zh">工程学士（计算机工程）· 2022 至今 · GPA 3.73/4.3</span></span>
+      </div>
+      <p class="edu-detail"><span data-lang="en">Relevant coursework: programming (Python, C/C++/C#), linear algebra, discrete math, data structures and algorithms, software engineering, computer networks, OOP and game design, machine learning and deep learning, IoT and computer vision, virtual reality.</span><span data-lang="zh">相关课程：编程（Python、C/C++/C#）、线性代数、离散数学、数据结构与算法、软件工程、计算机与通信网络、面向对象编程与游戏设计、机器学习与深度学习、物联网与计算机视觉、虚拟现实技术。</span></p>
+    </div>
+
+    <p class="more"><span data-lang="en">A few projects I'm most proud of live on the home page.</span><span data-lang="zh">我最得意的几个项目，可以在首页看到。</span></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .about h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .about h2 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.35rem;
+  }
+
+  .about p {
+    color: #3f575d;
+    max-width: 68ch;
+  }
+
+  .about .lead {
+    font-size: 1.15rem;
+    color: #152428;
+  }
+
+  .exp-item {
+    margin-bottom: 1.6rem;
+  }
+
+  .exp-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .exp-role {
+    font-weight: 600;
+    color: #0f3136;
+  }
+
+  .exp-org {
+    color: #39c5bb;
+    font-weight: 500;
+  }
+
+  .exp-meta {
+    color: #8aa0a5;
+    font-size: 0.85rem;
+  }
+
+  .exp-item ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .exp-item li {
+    margin-bottom: 0.35rem;
+    color: #4f6267;
+  }
+
+  .edu-item {
+    margin-bottom: 1.2rem;
+  }
+
+  .edu-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .edu-school {
+    font-weight: 600;
+    color: #0f3136;
+  }
+
+  .edu-meta {
+    color: #8aa0a5;
+    font-size: 0.85rem;
+  }
+
+  .edu-detail {
+    margin: 0.25rem 0 0;
+    color: #4f6267;
+    font-size: 0.95rem;
+  }
+
+  .more {
+    margin-top: 2.5rem;
+    font-style: italic;
+  }
+</style>

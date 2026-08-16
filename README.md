@@ -1,6 +1,6 @@
 # AaronAAnahc.github.io
 
-A clean, minimal Astro personal website with a restrained Hatsune Miku-inspired palette.
+A clean, minimal Astro personal website.
 
 ## Local development
 
@@ -29,4 +29,4 @@ In the repository settings, set **Pages** source to **GitHub Actions**.
 ## Content editing
 
 - Home page: `/home/runner/work/AaronAAnahc.github.io/AaronAAnahc.github.io/src/pages/index.astro`
-- About page (Markdown): `/home/runner/work/AaronAAnahc.github.io/AaronAAnahc.github.io/src/pages/about.md`
+- About page: `/home/runner/work/AaronAAnahc.github.io/AaronAAnahc.github.io/src/pages/about.astro`
