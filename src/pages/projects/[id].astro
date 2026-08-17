@@ -1,0 +1,219 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("projects");
+  const ids = [...new Set(entries.map((e) => e.data.id))];
+  return ids.map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const entries = await getCollection("projects");
+const en = entries.find((e) => e.data.id === id && e.data.lang === "en");
+const zh = entries.find((e) => e.data.id === id && e.data.lang === "zh");
+const meta = en ?? zh;
+
+const enRender = en ? await render(en) : null;
+const zhRender = zh ? await render(zh) : null;
+const EnContent = enRender?.Content;
+const ZhContent = zhRender?.Content;
+
+const base = import.meta.env.BASE_URL;
+const homeHref = base.endsWith("/") ? base : `${base}/`;
+---
+
+<BaseLayout title={`${meta.data.title} | A-BLOG`}>
+  <article class="project">
+    <a class="back" href={homeHref}>
+      <span data-lang="en">← Back to projects</span>
+      <span data-lang="zh">← 返回项目列表</span>
+    </a>
+
+    {meta.data.cover && (
+      <img class="cover" src={meta.data.cover} alt={meta.data.title} />
+    )}
+
+    <header class="head">
+      <h1><span data-lang="en">{en?.data.title}</span><span data-lang="zh">{zh?.data.title}</span></h1>
+      <p class="subtitle"><span data-lang="en">{en?.data.subtitle}</span><span data-lang="zh">{zh?.data.subtitle}</span></p>
+      <p class="desc"><span data-lang="en">{en?.data.description}</span><span data-lang="zh">{zh?.data.description}</span></p>
+    </header>
+
+    <div class="actions">
+      <a class="btn btn-primary" href={meta.data.github} target="_blank" rel="noreferrer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+        <span data-lang="en">View on GitHub</span><span data-lang="zh">查看 GitHub 仓库</span>
+      </a>
+      {meta.data.tech && <span class="tech">{meta.data.tech}</span>}
+    </div>
+
+    {EnContent && (
+      <div class="body" data-lang="en">
+        <EnContent />
+      </div>
+    )}
+    {ZhContent && (
+      <div class="body" data-lang="zh">
+        <ZhContent />
+      </div>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .project {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    color: #4f6267;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .back:hover {
+    color: #39c5bb;
+  }
+
+  .cover {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid #e3ecee;
+    margin-bottom: 1.5rem;
+  }
+
+  .head h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.15;
+  }
+
+  .subtitle {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: #39c5bb;
+    font-weight: 500;
+  }
+
+  .desc {
+    margin: 0;
+    color: #4f6267;
+    font-size: 1.05rem;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 1.25rem 0 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e8eff1;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background: #0f3136;
+  }
+
+  .btn-primary:hover {
+    background: #152428;
+  }
+
+  .tech {
+    color: #4f6267;
+    background: #eef5f6;
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Markdown 正文样式 */
+  .body {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #2b3c40;
+  }
+
+  .body :global(h2) {
+    margin: 2.25rem 0 0.75rem;
+    font-size: 1.3rem;
+    color: #0f3136;
+  }
+
+  .body :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .body :global(ul),
+  .body :global(ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.4rem;
+  }
+
+  .body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .body :global(strong) {
+    color: #152428;
+  }
+
+  .body :global(a) {
+    color: #39c5bb;
+    text-decoration: none;
+  }
+
+  .body :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .body :global(img),
+  .body :global(video) {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 1rem 0;
+  }
+
+  .body :global(code) {
+    background: #eef5f6;
+    color: #0f3136;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .body :global(pre) {
+    background: #0f3136;
+    color: #dff7f4;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .body :global(pre code) {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+</style>

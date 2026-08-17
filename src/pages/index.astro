@@ -1,77 +1,71 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const projects = [
-  {
-    name: "MinecraftMod-VillagerAgent",
-    url: "https://github.com/AaronAAnahc/MinecraftMod-VillagerAgent",
-    lang: "Java",
-    langColor: "#b07219",
-    desc: {
-      en: "AI-powered Minecraft villagers — LLM-driven agents with personalities, memories, and spatial reasoning.",
-      zh: "AI 驱动的 Minecraft 村民——大语言模型赋能的智能体，拥有个性、记忆与空间推理能力。",
-    },
-  },
-  {
-    name: "FPS-Simulator",
-    url: "https://github.com/JamesLiu12/FPS-Simulator",
-    lang: "C",
-    langColor: "#555555",
-    desc: {
-      en: "A self-built 3D FPS engine that renders a first-person shooter entirely in the terminal",
-      zh: "自建 3D FPS 引擎，在终端里渲染第一人称射击",
-    },
-  },
-  {
-    name: "TransKnight",
-    url: "https://github.com/AaronAAnahc/TransKnight",
-    lang: "Unity C#",
-    langColor: "#178600",
-    desc: {
-      en: "A 2D platformer starring a shape-shifting hero — transform mid-air to unlock new movement and attacks.",
-      zh: "主角可变身的 2D 平台跳跃游戏——空中变身解锁全新移动与攻击方式。",
-    },
-  },
-  {
-    name: "3DScan",
-    url: "https://github.com/AaronAAnahc/3DScan",
-    lang: "Unity C#",
-    langColor: "#178600",
-    desc: {
-      en: "A 3D scanning project based on AR that reconstructs real-world objects into digital 3D models using RGB-D.",
-      zh: "基于 AR 的 3D 扫描项目，利用 RGB-D 把真实物体重建为数字 3D 模型。",
-    },
-  },
-];
+const entries = await getCollection("projects");
+const ids = [...new Set(entries.map((e) => e.data.id))];
+const projects = ids
+  .map((id) => {
+    const en = entries.find((e) => e.data.id === id && e.data.lang === "en");
+    const zh = entries.find((e) => e.data.id === id && e.data.lang === "zh");
+    return { id, en, zh };
+  })
+  .sort((a, b) => (a.en?.data.order ?? 0) - (b.en?.data.order ?? 0));
+
+const blogEntries = await getCollection("blog");
+const blogIds = [...new Set(blogEntries.map((e) => e.data.id))];
+const posts = blogIds
+  .map((id) => {
+    const en = blogEntries.find((e) => e.data.id === id && e.data.lang === "en");
+    const zh = blogEntries.find((e) => e.data.id === id && e.data.lang === "zh");
+    return { id, en, zh };
+  })
+  .sort((a, b) => (b.en?.data.date ?? "").localeCompare(a.en?.data.date ?? ""));
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="A-BLOG | Home">
   <section class="hero">
     <h1><span data-lang="en">Aaron</span><span data-lang="zh">陳仲勳</span></h1>
-    <p class="intro"><span data-lang="en">Game developer working on real-time rendering and AI agents.</span><span data-lang="zh">游戏开发者，专注于实时渲染与 AI 智能体。</span></p>
+    <p class="intro"><span data-lang="en">This personal site is under construction.</span><span data-lang="zh">个人主页正在紧张施工中</span></p>
   </section>
 
   <section class="projects">
     <h2><span data-lang="en">Projects</span><span data-lang="zh">项目</span></h2>
     <div class="grid">
       {projects.map((p) => (
-        <a class="card" href={p.url} target="_blank" rel="noreferrer">
+        <a class="card" href={`${base}projects/${p.id}/`}>
           <div class="card-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z" />
             </svg>
-            <span class="card-name">{p.name}</span>
+            <span class="card-name">{p.en?.data.title}</span>
           </div>
-          <p class="card-desc"><span data-lang="en">{p.desc.en}</span><span data-lang="zh">{p.desc.zh}</span></p>
-          {p.lang && (
-            <div class="card-meta">
-              <span class="lang-dot" style={`background: ${p.langColor}`}></span>
-              <span>{p.lang}</span>
-            </div>
-          )}
+          <p class="card-desc"><span data-lang="en">{p.en?.data.subtitle}</span><span data-lang="zh">{p.zh?.data.subtitle}</span></p>
+          <div class="card-foot">
+            {p.en?.data.tech && <span class="tech">{p.en.data.tech}</span>}
+            <span class="more"><span data-lang="en">Read more →</span><span data-lang="zh">阅读详情 →</span></span>
+          </div>
         </a>
       ))}
     </div>
+  </section>
+
+  <section class="blog">
+    <h2><span data-lang="en">Blog</span><span data-lang="zh">博客</span></h2>
+    {posts.length > 0 ? (
+      <div class="blog-list">
+        {posts.map((post) => (
+          <a class="blog-card" href={`${base}blog/${post.id}/`}>
+            <span class="blog-title"><span data-lang="en">{post.en?.data.title}</span><span data-lang="zh">{post.zh?.data.title}</span></span>
+            <time class="blog-date">{post.en?.data.date}</time>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="blog-empty"><span data-lang="en">Blog posts coming soon.</span><span data-lang="zh">博客文章即将上线，敬请期待。</span></p>
+    )}
   </section>
 </BaseLayout>
 
@@ -147,19 +141,77 @@ const projects = [
     line-height: 1.5;
   }
 
-  .card-meta {
+  .card-foot {
     margin-top: auto;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8rem;
-    color: #4f6267;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
-  .lang-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
+  .tech {
+    color: #4f6267;
+    background: #eef5f6;
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .more {
+    color: #39c5bb;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .blog {
+    margin-top: 2.75rem;
+  }
+
+  .blog h2 {
+    font-size: 1.35rem;
+    margin: 0 0 1rem;
+  }
+
+  .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .blog-card {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid #e3ecee;
+    border-radius: 10px;
+    background: #ffffff;
+    text-decoration: none;
+    color: #0f3136;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .blog-card:hover {
+    border-color: #39c5bb;
+    box-shadow: 0 4px 14px rgba(57, 197, 187, 0.1);
+  }
+
+  .blog-title {
+    font-weight: 600;
+  }
+
+  .blog-date {
+    color: #8aa0a5;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .blog-empty {
+    margin: 0;
+    color: #8aa0a5;
+    font-size: 0.95rem;
   }
 </style>
