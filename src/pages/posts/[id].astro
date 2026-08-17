@@ -21,14 +21,17 @@ const ZhContent = zhRender?.Content;
 
 const base = import.meta.env.BASE_URL;
 const homeHref = base.endsWith("/") ? base : `${base}/`;
+const blogHref = `${homeHref}blog/`;
 ---
 
 <BaseLayout title={`${meta.data.title} | A-BLOG`}>
   <article class="post">
-    <a class="back" href={homeHref}>
-      <span data-lang="en">← Back to home</span>
-      <span data-lang="zh">← 返回首页</span>
+    <a class="back" href={blogHref}>
+      <span data-lang="en">← Back to blog</span>
+      <span data-lang="zh">← 返回博客</span>
     </a>
+
+    {meta.data.cover && <img class="cover" src={meta.data.cover} alt="" />}
 
     <header class="head">
       <h1><span data-lang="en">{en?.data.title}</span><span data-lang="zh">{zh?.data.title}</span></h1>
@@ -64,6 +67,13 @@ const homeHref = base.endsWith("/") ? base : `${base}/`;
 
   .back:hover {
     color: #39c5bb;
+  }
+
+  .cover {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: block;
   }
 
   .head {

@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getBlogPosts } from "../../lib/blog";
+import BlogList from "../../components/BlogList.astro";
+import Pager from "../../components/Pager.astro";
+
+const PAGE_SIZE = 5;
+const all = await getBlogPosts();
+const totalPages = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+
+export async function getStaticPaths() {
+  const list = await getBlogPosts();
+  const size = 5;
+  const tp = Math.max(1, Math.ceil(list.length / size));
+  const paths = [];
+  for (let p = 2; p <= tp; p++) {
+    paths.push({ params: { page: String(p) }, props: { page: p, totalPages: tp } });
+  }
+  return paths;
+}
+
+const { page, totalPages: tp } = Astro.props;
+const posts = all.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+---
+
+<BaseLayout title={`Blog · Page ${page} | A-BLOG`}>
+  <section class="blog-page">
+    <h2><span data-lang="en">Blog</span><span data-lang="zh">博客</span></h2>
+    <BlogList posts={posts} />
+    <Pager page={page} totalPages={tp} />
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-page h2 {
+    font-size: 1.35rem;
+    margin: 0 0 0.5rem;
+  }
+</style>

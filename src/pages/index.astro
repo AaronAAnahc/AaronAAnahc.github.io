@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogList from "../components/BlogList.astro";
+import { getBlogPosts } from "../lib/blog";
 
 const entries = await getCollection("projects");
 const ids = [...new Set(entries.map((e) => e.data.id))];
@@ -12,16 +14,7 @@ const projects = ids
   })
   .sort((a, b) => (a.en?.data.order ?? 0) - (b.en?.data.order ?? 0));
 
-const blogEntries = await getCollection("blog");
-const blogIds = [...new Set(blogEntries.map((e) => e.data.id))];
-const posts = blogIds
-  .map((id) => {
-    const en = blogEntries.find((e) => e.data.id === id && e.data.lang === "en");
-    const zh = blogEntries.find((e) => e.data.id === id && e.data.lang === "zh");
-    return { id, en, zh };
-  })
-  .sort((a, b) => (b.en?.data.date ?? "").localeCompare(a.en?.data.date ?? ""));
-
+const posts = await getBlogPosts();
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -54,18 +47,11 @@ const base = import.meta.env.BASE_URL;
 
   <section class="blog">
     <h2><span data-lang="en">Blog</span><span data-lang="zh">博客</span></h2>
-    {posts.length > 0 ? (
-      <div class="blog-list">
-        {posts.map((post) => (
-          <a class="blog-card" href={`${base}blog/${post.id}/`}>
-            <span class="blog-title"><span data-lang="en">{post.en?.data.title}</span><span data-lang="zh">{post.zh?.data.title}</span></span>
-            <time class="blog-date">{post.en?.data.date}</time>
-          </a>
-        ))}
-      </div>
-    ) : (
-      <p class="blog-empty"><span data-lang="en">Blog posts coming soon.</span><span data-lang="zh">博客文章即将上线，敬请期待。</span></p>
-    )}
+    <BlogList posts={posts.slice(0, 5)} />
+    <a class="post-all" href={`${base}blog/`}>
+      <span data-lang="en">View all posts →</span>
+      <span data-lang="zh">查看全部文章 →</span>
+    </a>
   </section>
 </BaseLayout>
 
@@ -174,44 +160,16 @@ const base = import.meta.env.BASE_URL;
     margin: 0 0 1rem;
   }
 
-  .blog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .blog-card {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.9rem 1.1rem;
-    border: 1px solid #e3ecee;
-    border-radius: 10px;
-    background: #ffffff;
-    text-decoration: none;
-    color: #0f3136;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .blog-card:hover {
-    border-color: #39c5bb;
-    box-shadow: 0 4px 14px rgba(57, 197, 187, 0.1);
-  }
-
-  .blog-title {
+  .post-all {
+    display: inline-block;
+    margin-top: 1.1rem;
+    color: #39c5bb;
     font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
   }
 
-  .blog-date {
-    color: #8aa0a5;
-    font-size: 0.85rem;
-    white-space: nowrap;
-  }
-
-  .blog-empty {
-    margin: 0;
-    color: #8aa0a5;
-    font-size: 0.95rem;
+  .post-all:hover {
+    text-decoration: underline;
   }
 </style>

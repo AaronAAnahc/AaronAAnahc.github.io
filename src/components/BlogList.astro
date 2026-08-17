@@ -1,0 +1,132 @@
+---
+// 博客文章列表（列表样式，非卡片）：每行一篇，无圆角框，横线分隔，
+// 左侧预留图片位，右上角发布时间，标题左上、副标题在标题下方。
+const { posts } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+{
+  posts && posts.length > 0 ? (
+    <div class="post-list">
+      {posts.map((post) => (
+        <a class="post-item" href={`${base}posts/${post.id}/`}>
+          <div class="post-thumb">
+            {post.en?.data.cover && <img src={post.en.data.cover} alt="" />}
+          </div>
+          <div class="post-main">
+            <div class="post-row">
+              <span class="post-title">
+                <span data-lang="en">{post.en?.data.title}</span>
+                <span data-lang="zh">{post.zh?.data.title}</span>
+              </span>
+              <time class="post-date">{post.en?.data.date}</time>
+            </div>
+            <p class="post-sub">
+              <span data-lang="en">{post.en?.data.description}</span>
+              <span data-lang="zh">{post.zh?.data.description}</span>
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <p class="blog-empty">
+      <span data-lang="en">Blog posts coming soon.</span>
+      <span data-lang="zh">博客文章即将上线，敬请期待。</span>
+    </p>
+  )
+}
+
+<style>
+  .post-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 整行一篇文章，无圆角框；上下用横线分隔 */
+  .post-item {
+    display: flex;
+    gap: 1.1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid #e8eff1;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-item:last-child {
+    border-bottom: 1px solid #e8eff1;
+  }
+
+  .post-item:hover .post-title {
+    color: var(--accent);
+  }
+
+  /* 左侧预留图片空间 */
+  .post-thumb {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #eef5f6;
+    overflow: hidden;
+  }
+
+  .post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* 标题左上、时间右上 */
+  .post-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .post-title {
+    font-weight: 600;
+    font-size: 1.12rem;
+    color: #0f3136;
+    transition: color 0.15s ease;
+  }
+
+  .post-date {
+    flex-shrink: 0;
+    color: #8aa0a5;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* 副标题在标题下方 */
+  .post-sub {
+    margin: 0.4rem 0 0;
+    color: #4f6267;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .blog-empty {
+    margin: 0;
+    color: #8aa0a5;
+    font-size: 0.95rem;
+  }
+
+  /* 窄屏：图片缩小，避免挤压文字 */
+  @media (max-width: 520px) {
+    .post-thumb {
+      width: 64px;
+      height: 64px;
+    }
+    .post-title {
+      font-size: 1rem;
+    }
+  }
+</style>

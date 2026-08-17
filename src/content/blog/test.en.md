@@ -4,6 +4,7 @@ lang: en
 title: "Test Post"
 description: "A test post to verify the blog system works."
 date: "2026-08-17"
+cover: /blog/test/cover.svg
 ---
 
 This is a test blog post to make sure the blog system works end to end.
